@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=.7">
+    <meta name="og:image" content="VCNU1.png">
+		<link rel="shortcut icon" type="image/png" href="VCNU1.png"/>
+    <title>whitehot robot tracks</title>
+		<meta name="description" content="whitehot robot tracks">
+    <style>
+      body, html{
+        border: 0;
+        background-color: #0000;
+        background-image: url(https://jsbot.whitehot.ninja/uploads/hVMqI.jpg);
+        background-repead: no-repeat;
+        background-attachment: fixed;
+        background-size: 100vw 100vh;
+        height: 100vh;
+        overflow: hidden;
+        color:#cfd;
+        font-size: .85em;
+        font-family: courier;
+        margin: 0;
+      }
+      .bg_overlay{
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        top: 0;
+        left: 0;
+        background: #0008;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100vw 100vh;
+        background-position: center center;
+      }
+      .headerLogo{
+        border-radius: 10px;
+        border: 1px solid #4f82;
+        position: fixed;
+        cursor: pointer;
+        left: 10px;
+        background-size: 200px 50px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-color: #4f84;
+        background-image: url(playlist_logo.png);
+        top: 10px;
+        z-index: 100;
+        width: 200px;
+        height: 50px;
+      }
+      .main{
+        text-align: center;
+        padding-bottom: 100px;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        position: relative;
+        min-height: 100vh;
+        width: 100%;
+      }
+      .deleteButton{
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        cursor: pointer;
+        background-size: 35px 35px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-color: #0000;
+        width: 35px;
+        min-width: 25px;
+        height: 35px;
+        margin-left: 15px;
+        margin-right: 15px;
+        background-image: url(https://jsbot.whitehot.ninja/uploads/XeGsK.png);
+      }
+      .songButton{
+        border-radius: 15px;
+        display: inline-block;
+        border: none;
+        max-width: calc(75% - 0px);
+        min-width: calc(75% - 0px);
+        cursor: pointer;
+        color: #afa;
+        font-family: courier;
+        font-size: 2em;
+        padding: 10px;
+        margin: 10px;
+        whitespace: normal;
+        text-align: left;
+        text-shadow: 1px 1px 2px #000;
+        padding-left: 60px;
+        padding-right: 5px;
+        background-image: url(2ftyk1.png);
+        background-color: #044;
+        background-repeat: no-repeat;
+        background-position: 10px center;
+        background-size: 45px 45px;
+      }
+      .playerFrame{
+        left: 0;
+        top:0;
+        margin-top:0px;
+        width:100%;
+        min-width: 600px;
+        max-width: 70%;
+        height:290px;
+        border:none;
+        vertical-align:top;
+        border-radius: 10px;
+      }
+      input[type=checkbox]{
+        transform: scale(2.0);
+      }
+      label{
+        font-size: 2em;
+      }
+      .jumpButton{
+        position: fixed;
+        left: 0;
+        top: 0;
+        margin: 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        background: #408;
+        color: #fff;
+        border: none;
+        z-index: 20;
+        font-weight: 900;
+        font-family: courier;
+        cursor: pointer;
+      }
+      .trackButtons{
+        margin-top: 20px;
+        width:100%;
+        min-width: 600px;
+        max-width: 75%;
+        display: inline-block;
+        max-height: calc(100vh - 390px);
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      .modal{
+        position: fixed;
+        width: 100vw;
+        height: calc(100vh - 100px);
+        padding-top: 100px;
+        text-align: center;
+        background: #001414e8;
+        display: none;
+        overflow-y: auto;
+      }
+      #addTrackModal{
+        z-index: 100;
+      }
+      .addTrackButton{
+        font-size: 16px;
+        margin: 10px;
+        width: calc(100% - 100px);
+      }
+      .normalButtons{
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        background: #2fc6;
+        color: #8fc;
+        text-shadow: 2px 2px 2px #000;
+        font-size: 24px;
+        cursor: pointer;
+        min-width: 150px;
+        font-family: courier;
+      }
+      .closeButton{
+        background: #300;
+        color: #fcc;
+      }
+      .searchButton{
+        background: #032;
+        color: #8fc;
+      }
+      input[type=text]{
+        font-size: 24px;
+        background: #000;
+        border: none;
+        outline: none;
+        font-family: courier;
+        min-width: 400px;
+        border-bottom: 1px solid #084;
+        color: #ffc;
+        text-align: center;
+      }
+      .audiocloud{
+        background: #206;
+      }
+      a{
+        color: #ff0;
+        text-decoration: none;
+        background: #002;
+        border-radius: 5px;
+        padding: 5px;
+      }
+      #searchResults{
+        width: 800px;
+        padding: 20px;
+        padding-bottom: 100px;
+        font-size: 24px;
+        display: inline-block;
+      }
+      #audiocloudDiv{
+        backgroundL #f00;
+      }
+      #youtubeDiv{
+        backgroundL #04f;
+      }
+      .youtubeLogo{
+        color: #fff;
+        background: #f00;
+        font-weight: 900;
+      }
+      #bufferedTrack{
+        top: 348px;
+        left: 50%;
+        line-height: 16px;
+        transform: translate(-50%);
+        font-size: 18px;
+        background: linear-gradient(90deg, #000, #0000);
+        position: absolute;
+        text-align: left;
+        padding: 5px;
+        break-word: break-all;
+        width: 65%;
+        color: #bbba;
+      }
+      .bufferTrackTitle{
+        font-size: 16px;
+        font-style: oblique;
+        color: #aaa;
+      }
+      .loaded{
+        background: #4f8c;
+        color: #000;
+        position: absolute;
+        margin-top: -1px;
+        margin-left: 5px;
+        font-size: 16px;
+        line-height: 16px;
+        font-weight: 900;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="headerLogo" onclick="window.location.href='/public_playlists'" title="go to homepage"></div>
+    <div class="bg_overlay"></div>
+    <div id="addTrackModal" class="modal">
+      <input
+        spellcheck="false"
+        type="text"
+        autofocus
+        onkeypress="searchMaybe(event)"
+        id="searchBar"
+      ><br>
+      <div style="width: 300px;text-align: left;margin-left:auto;margin-right: auto;margin-top: 20px;">
+        <label for="exactCB">
+          <input type="checkbox" id="exactCB" oninput="toggleExact(this)">
+          exact match
+        </label><br>
+        <label for="allWordsCB">
+          <input type="checkbox" checked id="allWordsCB" oninput="toggleAllWords(this)">
+          include all words
+        </label>
+      </div>
+      <br><br><br>
+      <button onclick="search()" class="searchButton normalButtons">search</button><br><br>
+      <button onclick="closeModal('#addTrackModal')" class="closeButton normalButtons">close</button><br><br>
+      <div id="searchResults"></div>
+    </div>
+    <div class="main">
+      <br>
+      <label for="shuffle">
+        <input type="checkbox" checked id="shuffle" oninput="toggleShuffle(this)">
+        shuffle
+      </label>
+      <button onclick="showModal('#addTrackModal')" class="normalButtons">add track(s)</button>
+      <br><br>
+      <div id="iframeDiv">
+        <iframe
+          class="playerFrame"
+          src=""
+        ></iframe>
+      </div>
+      <br><br>
+      <div class="trackButtons"></div>
+      <div id="bufferedTrack"><span style="color: #fff;">next track:</span><br></div>
+    <script>
+      Rn=Math.random
+      userInteracted = false
+      let searchBar = document.querySelector('#searchBar')
+      let searchResults = document.querySelector('#searchResults')
+      let allWordsCB = document.querySelector('#allWordsCB')
+      let exactCB = document.querySelector('#exactCB')
+      let iframeDiv = document.querySelector('#iframeDiv')
+      let buffer_el = ''
+      let nextRnd
+      let shuffle = true
+      let exact = false
+      let allWords = true      
+      let bufferedTrack=document.querySelector('#bufferedTrack')
+
+      window.onkeydown=e=>{
+        if(e.keyCode==27) closeModal('#addTrackModal')
+      }
+
+      searchMaybe=e=>{
+        let sparam = searchBar.value
+        if(e.keyCode==13 && sparam !== ''){
+          search()
+        }
+      }
+      
+      addTrack=(id, source)=>{
+        sendData = { id, source }
+        //searchResults.innerHTML = ''
+        //searchBar.value = ''
+        //closeModal('#addTrackModal')
+        setTimeout(()=>{
+          alert("\nthe track is being added.\n\nif successful, it will appear in your list shortly, as if by magic...")
+        }, 0)
+        fetch('addTrack.php',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sendData),
+        }).then(res=>res.json()).then(data=>{
+          if(data[0]){
+            tracks = ['tracks/' + data[1], ...tracks]
+            renderTracks()
+          } else {
+            alert('there was a problem adding the track!')
+          }
+        })
+      }
+      
+      search=()=>{
+        let sparam = searchBar.value
+        sparam = searchBar.value
+        if(!sparam) return
+        sendData = { sparam, allWords, exact }
+        fetch('search.php',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sendData),
+        }).then(res=>res.json()).then(data=>{
+          if(data[0]){
+            res = JSON.parse(data[2])
+            searchResults.innerHTML=`search results [<a href="https://audiocloud.dweet.net" target="_blank">audiocloud</a>]<br><div id="audiocloudDiv">`
+            res[0].map(v=>{
+              searchResults.innerHTML+=`<button class="normalButtons addTrackButton audiocloud"
+                onclick="addTrack(`+v.id+`, 'audiocloud')"
+                title="description: `+v.description+`">`+v.trackName+`</button>`
+            })
+            if(!res.length) searchResults.innerHTML+='no results'
+            searchResults.innerHTML+='<br><br><br>search results ['
+            let sp = document.createElement('span')
+            sp.innerHTML='youtube'
+            sp.className='youtubeLogo'
+            searchResults.appendChild(sp)
+            searchResults.innerHTML+=`]<br><br></div><div id="youtubeDiv">`
+            searchResponse = data[1]
+            searchResponse.map(v=>{
+              searchResults.innerHTML+=`<button class="normalButtons addTrackButton"
+                onclick="addTrack('`+v.id+`', 'youtube')"
+                title="description: `+v.description+`">`+v.snippet.title+`</button>`
+            })
+            if(!searchResponse.length) searchResults.innerHTML+='no results'
+            searchResults.innerHTML+='</div>'
+          } else {
+            alert('there was a problem searching... :(')
+          }
+        })
+      }
+      
+      closeModal=modal=>{
+        document.querySelector(modal).style.display='none'
+      }
+      
+      showModal=modal=>{
+        document.querySelector(modal).style.display='block'
+        searchBar.focus()
+      }
+      
+      scrollUp=()=>{
+        window.scrollTo(0, 0)
+      }
+      
+      deleteTrack=idx=>{
+        let trackName=(l=decodeURI(tracks[idx]).split('/'))[l.length-1]
+        if(confirm("\n\nAre you SURE you want to do this????\n\nthis action is irreversible!")){
+          sendData = { trackName }
+          fetch('deleteTrack.php',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(sendData),
+          }).then(res=>res.json()).then(data=>{
+            if(data[0]){
+              tracks=tracks.filter((q,j)=>j!=idx)
+              setTimeout(()=>renderTracks(), 0)
+            }else{
+              alert("d'oh.\n\nthere was an error or summat")
+            }
+          })
+        }
+      }
+      
+      next = ''
+      
+      preloadNext=()=>{
+        setTimeout(()=>{
+          nextRnd = shuffle? Rn()*tracks.length|0 : (curIDX + 1)%tracks.length
+          let nextTrackName=decodeURI(tracks[nextRnd].replaceAll('tracks/',''))
+          let t=0
+          let loadingTimer = setInterval(()=>{
+            bufferedTrack.innerHTML='<span style="color: #afc;font-weight: 900;">next track:</span>'+" <span style=\"color: #aaa;font-weight: 900;\">(buffering"+('.'.repeat(t%8))+('&nbsp;'.repeat(8-(t%8)))+")</span>"+'<br>'+('&nbsp;'.repeat(4))+'<span class="bufferTrackTitle">'+nextTrackName+'</span>'
+            t+=1
+          }, 50)
+          preload = new Audio()
+          preload.style.position='absolute'
+          preload.style.visibility='hidden'
+          document.body.appendChild(preload)
+          setTimeout(()=>{
+            clearInterval(loadingTimer)
+          }, 30000)
+          setTimeout(()=>{
+            preload.crossorigin="anonymous"
+            preload.src = window.location.href + tracks[nextRnd] + (userInteracted ? '?autoplay' : '')
+            preload.onloadeddata=()=>{
+              clearInterval(loadingTimer)
+              bufferedTrack.innerHTML='<span style="color: #afc;font-weight: 900;">next track:</span>'+` <span class="loaded">(loaded!)</span>`+'<br>'+('&nbsp;').repeat(4)+'<span class="bufferTrackTitle">'+nextTrackName+'</span>'
+            }
+          }, 5000)
+        }, 0)
+      }
+      
+      playTrack=idx=>{
+        let src = 'https://audioplayer.whitehot.ninja/index.html?i=' + location.origin + '/' + tracks[idx] + (userInteracted ? '?autoplay' : '')
+        console.log(idx, userInteracted, src)
+        let el
+        (el = document.querySelectorAll('.playerFrame')[0])
+        preloadNext()
+        postMessage(JSON.stringify({'userInteracted': userInteracted}))
+        el.src = 'https://audioplayer.whitehot.ninja/index.html?i=' + location.origin + '/' + tracks[idx] + (userInteracted ? '?autoplay' : '')
+      }
+      
+      curIDX = 0
+
+      renderTracks=()=>{
+        let trackDiv = document.querySelectorAll('.trackButtons')[0]
+        trackDiv.innerHTML = ''
+        tracks.map((v, i)=>{
+          let tb = document.createElement('button')
+          tb.className = 'songButton'
+          tb.onclick = () =>{
+            playTrack(curIDX = i)
+          }
+          tb.innerHTML = decodeURI(v.replaceAll('tracks/', '')) + '<br>'
+          trackDiv.appendChild(tb)
+          let db = document.createElement('button')
+          db.className = 'deleteButton'
+          db.onclick = () =>{
+            deleteTrack(curIDX = i)
+          }
+          trackDiv.appendChild(db)
+        })
+      }
+
+      postMessage=msg=>{
+        let el
+        (el = document.querySelectorAll('.playerFrame')[0])
+        //if(el.src.indexOf('index.html') != -1){
+          el.contentWindow.postMessage(msg, '*')
+        //}
+      }
+
+      console.log('attempting to set message listener')
+	    window.addEventListener('message', e => {
+
+        console.log('received message from audioplayer:',e)
+        const key = e.message ? 'message' : 'data';
+        const data = e[key];
+			  console.log('e[message]:',e.message,'e[data]',e.data,'e.playing',e.playing)
+        switch(data){
+          case 'ended':
+            playTrack(shuffle ? nextRnd : curIDX=(curIDX+1)%tracks.length)
+          break
+          case 'playing':
+            userInteracted = true
+          break
+        }
+	  }, false)
+
+      toggleShuffle=e=>{
+        shuffle = e.checked
+        preloadNext()
+      }
+
+      toggleExact=e=>{
+        exact = e.checked
+      }
+
+      toggleAllWords=e=>{
+        allWords = e.checked
+      }
+
+
+tracks = ["1. Blue Swede - Hooked on a Feeling-NrI-UBIB8Jk.mp3","419 Tessa Violet - Breakdown.mp3","A Final Hit-ZiM-MBpe8gY.mp3","A Warm Place-Yld7Fs-VfRE.mp3","Abba - Dancing Queen (Official Music Video Remastered)-xFrGuyw1V8s.mp3","Abba - Honey, Honey (1976).mp3","after dark.mp3","Air - Cherry Blossom Girl-mQONxOIPPuI.mp3","Air - Mike Mills-P-DnNRlEYuc.mp3","Air - New Star In The Sky (Chanson Pour Solar).mp3","Air - Radian-ipBhCk4Rfss.mp3","All I Have To Do Is Dream - Everly Brothers.mp3","Alone in Kyoto-I0SVd_Q5wIg.mp3","Animotion - Obsession.mp3","Annachie Gordon.mp3","Aphex Twin - Iz us-dLHtV_S2HZw.mp3","AURORA - A Temporary High (Lyric Video).mp3","AURORA - Exist For Love-7YDkrJaiCrw.mp3","AURORA covers Massive Attack Teardrop for Like A Version.mp3","Avril Lavigne   Skater Boi unicorn mix-XWPfQP3Irmo.mp3","Avril Lavigne - Girlfriend-Bg59q4puhmg.mp3","Belinda Carlisle - Heaven Is A Place On Earth (Official Music Video)-NOGEyBeoBGM.mp3","Belly - Feed The Tree.mp3","billie eilish - everything i wanted (sung by rosella) (unicorn mix)-ZcdJiwwBEC0.mp3","Bjrk - Hyperballad.mp3","bjrk _ army of me (HD).mp3","bjrk _ human behaviour (HD).mp3","bjrk _ possibly maybe (HD).mp3","Black Dog (Remaster).mp3","Blondie - Atomic (Official Music Video).mp3","Blondie - Heart Of Glass (Official Music Video)-WGU_4-5RaxU.mp3","BLONDIE - Maria-Mp8FF6AMZjE.mp3","Blondie - Picture This.mp3","Bon Jovi - Livin' On A Prayer (Official Music Video)-lDK9QqIzhwk.mp3","Book Of Love - Boy (Official Music Video)-0vcjJKNq9EM.mp3","Book Of Love - Pretty Boys And Pretty Girls (Official Music Video)-p8efAQ33fq0.mp3","Bruce Springsteen - I'm On Fire (Official Video)-lrpXArn3hII.mp3","BT featuring Tori Amos - Blue Skies-axupfccW51M.mp3","Burn (From Natural Born Killers Soundtrack).mp3","CAKE - Never There-FRZzUh9hcTo.mp3","Calvin Harris - Feels (Official Video) ft. Pharrell Williams, Katy Perry, Big Sean-ozv4q2ov3Mk.mp3","Camila Cabello - Never Be the Same-Ph54wQG8ynk.mp3","Charli XCX - Boom Clap (The Fault In Our Stars Soundtrack) [Official Video]-AOPMlIIg_38.mp3","CHROMATICS 'CHERRY' (Official Video)-CjQ2jGUNSck.mp3","CHROMATICS 'TIME RIDER' (Official Video)-dhDhPPcK6C4.mp3","CHROMATICS BLUE GIRL (Official Video).mp3","CHROMATICS CHERRY (Official Video).mp3","CHROMATICS KILL FOR LOVE (Official Video).mp3","CHROMATICS SHADOW (Official Video).mp3","CHROMATICS TIME RIDER (Official Video).mp3","CHVRCHES - Clearest Blue-BZyzX4c1vIs.mp3","CHVRCHES - Graffiti-LDSVLQoPc8w.mp3","CHVRCHES - Somebody Else (The 1975 cover) in the Live Lounge-wEdRhmBx8IU.mp3","CHVRCHES VS DEPECHE MODE- Just Can't Get The Clearest Blue-8FvkkjUQg-U.mp3","Cocteau Twins - Persephone--jv0zRf6V4s.mp3","Cocteau Twins Alice HD-Sy2o6dzE9w8.mp3","Coldplay - Yellow (Official Video)-yKNxeF4KMsY.mp3","Cowboy Junkies - Sweet Jane (Official Video).mp3","Crystal Method - Vapor Trail-NBh16Nttu7U.mp3","Cyndi Lauper - All Through the Night (Official Audio)-ZONKoKIQ9RY.mp3","Cyndi Lauper - Girls Just Want To Have Fun (Official Video)-PIb6AZdTr-A.mp3","cyndi lauper - time after time (unicorn mix)-yYd2hBEP7qA.mp3","David Bowie & Freddie Mercury - Under Pressure.mp3","David Bowie - Golden Years.mp3","David Bowie - Heroes (Official Video)-lXgkuM2NhYI.mp3","David Bowie - Modern Love (Official Video).mp3","David Bowie - Rebel Rebel  TopPop.mp3","David Bowie - The Man Who Sold The World [2020 Mix] [Official Lyric Video].mp3","Daya - Hide Away (unicorn mix)-yffh0zIrH7Q.mp3","Dead Can Dance - Fortune Presents Gifts not According to the Book-WLvZvjkLrtg.mp3","Dead Can Dance - The Carnival Is Over (Official Video)-mPDLJ1UU2Uk.mp3","Dead Can Dance ~ The Ubiquitous Mr. Lovegrove-qbaKEt5BtHo.mp3","Dead Can Dance- Rakim.mp3","Death Cab For Cutie - I Will Follow You Into The Dark +Lyrics-NDHY1D0tKRA.mp3","Death Cab for Cutie - Soul Meets Body (video)-uizQVriWp8M.mp3","Debbie Gibson - Only in My Dreams (Official Music Video)-4T1t5OFOYDU.mp3","Depeche Mode - Everything Counts (Official Video)-1t-gK-9EIq4.mp3","Depeche Mode - Just Can't Get Enough (Official Video)-_6FBfAQ-NDE.mp3","Depeche Mode - New Life (High Quality 1080p)-ZFnEhwmpjXI.mp3","Dido - Thank You (Official Video)-1TO48Cnl66w.mp3","Dido - White Flag (Official Video)-j-fWDrZSiZs.mp3","Diesel Power-Sya5rhtTJw8.mp3","Doja Cat - MOOO! (Audio).mp3","Dreaming-_xko4lzzWPM.mp3","Dua Lipa - Be The One (Official Music Video)--rey3m8SWQI.mp3","Dua Lipa - IDGAF (Official Music Video)-Mgfe5tIwOj0.mp3","Edie Brickell & New Bohemians - What I Am (Official Music Video)-tDl3bdE3YQA.mp3","Ellie Goulding - Love Me Like You Do (Official Video)-AJtDXIazrMo.mp3","Erasure - A Little Respect (Official HD Music Video)-x34icYC8zA0.mp3","Erasure - Always (Official HD Remastered Video)-lWqJTKdznaM.mp3","Erasure - Love To Hate You (Official HD Video)-ygLy02y7_n8.mp3","Escape-PKL5wOwXX6A.mp3","Everly Brothers - Crying In The Rain.mp3","Everly Brothers - Love Hurts.mp3","Everly Brothers Let it be me.mp3","Everly Brothers When Will I Be Loved.mp3","Everything In Its Right Place.mp3","Exchange.mp3","Filter - Hey Man, Nice Shot (Official Music Video)-o9mJ82x_l-E.mp3","Fischerspooner - Emerge-217CdX7Z2tM.mp3","Fleetwood Mac - Dreams [with lyrics]-mrZRURcb1cM.mp3","Fleetwood Mac - Landslide (Official Music Video)-WM7-PYtXtJM.mp3","Fly with me.mp3","Foo Fighters - Everlong (Official HD Video)-eBG7P-K-r1Y.mp3","Foster The People - Pumped Up Kicks (Official Video)-SDTZ7iX4vTQ.mp3","Fountains of Wayne - Stacy's Mom (Official Music Video)-dZLfasMPOU4.mp3","Free Four-FPSb5QjgjAc.mp3","Futurama Theme Song.mp3","GLME _BLOSSOM_ (Official Video).mp3","GLME _BODY_ (Official Video).mp3","GLUME DO ME A FAVOR.mp3","GLÜME 'GET LOW' (Official Video)-qKy2e92DzNU.mp3","GLÜME 'NERVOUS BREAKDOWN' (Official Video)-ezonBsarKiY.mp3","Goldfrapp - Strict Machine (Official HD Video)-YeawPUpTHJA.mp3","Good People - Jack Johnson - With Lyrics-hxuCLopcEy4.mp3","Gordon Lightfoot - If You Could Read My Mind.mp3","Gordon Lightfoot - Sundown (Lyrics)-GeZM12H5cJ8.mp3","Grateful Dead - Friend of The Devil-XacvydVrhuI.mp3","Grimes - Flesh without Blood_Life in the Vivid Dream-Tv9YoYCKNoE.mp3","Grimes - Idoru (Slightly Longer Version)-oCrhTU9HkVQ.mp3","Group Four.mp3","Gwen Stefani - Cool (Official Music Video).mp3","Gwen Stefani - What You Waiting For-RtBPPr_GVUg.mp3","Hat Back Boogie - Lee Press-On and the Nails.mp3","Heart - 'Barracuda' (1977)-PeMvMNpvB5M.mp3","Heart-Magic Man-3vlAdMeZSfw.mp3","Hello, Goodbye (Remastered 2009).mp3","Hey Ya!-Jx_O6PHdWww.mp3","High Roller-_1aCB2hbMFg.mp3","Hoedown Throwdown.mp3","Hot Chip - 'Ready For The Floor'-8Cxry9cLFQI.mp3","How Fortunate the Man With None (Remastered).mp3","How Soon Is Now (2008 Remaster)-4PIi1LWkfDE.mp3","I'l Fly With You (Original)-olkxWNySPdo.mp3","If You Leave (2019 Remaster)-fVnsiFHfeAM.mp3","Iggy Azalea - Fancy ft. Charli XCX (Official Music Video)-O-zpOMYRi0w.mp3","Iggy Azalea - Sally Walker ( Lyrics ).mp3","Iggy Azalea - Sally Walker (Official Music Video).mp3","Iggy Azalea - Work (Official Music Video)-_zR6ROjoOX0.mp3","Imagine Dragons - Thunder-fKopy74weus.mp3","Jefferson Airplane -White Rabbit--WANNqr-vcx0.mp3","John Cougar - Jack & Diane [Vinyl]-v7vMv8Hx-Fw.mp3","John Denver - Take Me Home, Country Roads (from The Wildlife Concert).mp3","JOON 'E.T.' (Official Video)-XXERakA1KY4.mp3","JOON _CRUEL SUMMER_ (Official Video).mp3","Journey - Don't Stop Believin' (from Live in Houston 1981 - The Escape Tour)-VcjzHMhBtf0.mp3","Juice Newton - Angel Of The Morning (Official Music Video)-HTzGMEfbnAw.mp3","Junior Senior - Move Your Feet (Official music video, HD)-SPlQpGeTbIE.mp3","Just My Imagination (Running Away With Me)-1g3e3cgktZU.mp3","Kate Bush - Cloudbusting - Official Music Video-pllRW9wETzw.mp3","Kate Bush - Hounds of Love - Official Music Video-VerK4zwMRQw.mp3","Katy Perry - California Gurls (Official Music Video) ft. Snoop Dogg-F57P9C4SAW4.mp3","Katy Perry - Hot N Cold (Official).mp3","L7 - Pretend We're Dead-NAdlZ2F-fs8.mp3","Lady Gaga - Just Dance (Official Music Video) ft. Colby O'Donis-2Abk1jAONjw.mp3","Led Zeppelin - Going To California (Official Audio)-NrUIJY_Xu2s.mp3","Led Zeppelin - Kashmir (Live from Celebration Day) (Official Video).mp3","Led Zeppelin - Tangerine (Official Audio)-KaFjxLMsOuo.mp3","Led Zeppelin - Thank You (Official Audio)-12KbOAc8vmk.mp3","Lemon Jelly- His Majesty King Raam (full album version)-vUeqdFWJ9vE.mp3","Lenny Kravitz - Fly Away-EvuL5jyCHOw.mp3","Lily Allen _ Not Fair (Official Video)-fUYaosyR4bE.mp3","Lorde - Royals (US Version)-nlcIKh6sBtc.mp3","Lorde - Team-f2JuxM-snGc.mp3","loreena mckennitt - mummers dance-LzE32ChEp24.mp3","Lost Like Innocence.mp3","Lou Reed - Perfect Day (Audio).mp3","Love and Rockets - So Alive--L41MhFPU9s.mp3","Luscious Jackson - Citysong-IjN2mQ6IYQY.mp3","Madonna - Borderline (Official Video)-rSaC-YbSDpo.mp3","Madonna - Cherish (Official Video) [HD]-8q2WS6ahCnY.mp3","Madonna - Crazy For You (Official Video).mp3","Madonna - Holiday [Official Music Video]-5Rswx2Z7SDw.mp3","Madonna - Into The Groove (Official Video)-52iW3lcpK5M.mp3","Madonna - Jump (Official Video) [HD]-Rx0mYN32Kps.mp3","Madonna - Like A Virgin (Official Video).mp3","Madonna - Live To Tell (Official Video).mp3","Magdalena Bay - Chaeri (Live from My Den).mp3","Magdalena Bay - Chaeri (Official Video).mp3","Magdalena Bay - Domino.mp3","Magdalena Bay - Dreamcatching (Official Video).mp3","Magdalena Bay - El Dorado.mp3","Magdalena Bay - Killshot.mp3","Magdalena Bay - Secrets (Your Fire) (Official Video).mp3","Magdalena Bay - Turning Off The Rain (2019).mp3","Martin Solveig & Dragonette - Hello (Official Music Video) [HD]-LnET4RKXx5k.mp3","massive attack  -   black milk.mp3","Massive Attack - Butterfly Caught.mp3","Massive Attack - Dissolved girl.mp3","Massive Attack - Protection-Epgo8ixX6Wo.mp3","MGMT - Electric Feel (Official HD Video)-MmZexg8sxyk.mp3","MGMT - Kids (Official HD Video)-fe4EK4HSPkI.mp3","Michael Jackson - Dont Stop til you get enough.mp3","Michael Jackson - Wanna Be Startin Somethin (Audio).mp3","Mike Posner - I Took A Pill In Ibiza (Seeb Remix) (Explicit)-foE1mO2yM04.mp3","Miley Cyrus - Party In The U.S.A. (Official Video)-M11SvDtPBhA.mp3","Miss Jane - It's A Fine Day (ATB Radio Edit) (1998) [Official Video].mp3","Morning Train (Nine to Five).mp3","Morrissey - Everyday is like sunday.mp3","Mott The Hoople - All the Young Dudes (Audio).mp3","Mountains of the Moon (2013 Remaster)-aDjLJ6PYgO0.mp3","Mr.Kitty - After Dark - piano version.mp3","My name is Bjrk and your television is just about to explode! (Audio enhanced, cropped).mp3","Natalie Imbruglia - Torn (Official Video)-VV1XWJN3nJo.mp3","Natalie Merchant - Kind and Generous-uAwyIad93-c.mp3","Nine Inch Nails - The Perfect Drug (Official Video).mp3","Nirvana - In Bloom [Nevermind] [HQ Sound].mp3","No Doubt - It's My Life (Edited)-ubvV498pyIM.mp3","No Doubt - Its My Life (Edited).mp3","On Melancholy Hill-p00v9ZFhWJM.mp3","Only in My Dreams-2V-J7nYNjlI.mp3","Opus III-It's A Fine Day HQ.mp3","Orbital - Halcyon (Official Music Video).mp3","Orbital - Halcyon On and On-bV-hSgL1R74.mp3","Orinoco Flow (2009 Remaster).mp3","P!NK - Don't Let Me Get Me (Video)-asaCQOZpqUQ.mp3","P!nk - Just Like A Pill (Official Video)-JDKGWaCglRM.mp3","P!nk - Please Don't Leave Me (Official Video)-eocCPDxKq1o.mp3","Pale 3 (The Princess And The Warrior soundtrack) - Four Days (feat. Anita Lane).mp3","Pale 3 - The Roof.mp3","Pale 3 Feat. Skin - You Cant Find Peace (Album Version).mp3","Pat Benatar - We Belong (Official Video)-qxZInIyOBXk.mp3","Pearl Jam - Alive (Official Video)-qM0zINtulhM.mp3","Pet Shop Boys - Always On My Mind-wDe60CbIagg.mp3","Pet Shop Boys - Being Boring-DnvFOaBoieE.mp3","Peter Gabriel - In Your Eyes.mp3","Peter Gabriel - Solsbury Hill-_OO2PuGz-H8.mp3","Pets-mFkRvF8MeYM.mp3","Pink Floyd - Breathe.mp3","Pink Floyd - Green Is The Colour (Official Music Video)-4XeWngFZaa8.mp3","Pink Floyd - Learning To Fly (Official Music Video HD)-nVhNCTH8pDs.mp3","Pink Floyd - Time (2011 Remastered).mp3","Pink Floyd - Wots Uh The Deal (Official Music Video).mp3","Pink Floyd - Wot’s… Uh The Deal (Official Music Video)-aGPjfj69cXE.mp3","Pink Floyd_ The Wall - When The Tigers Broke Free.mp3","Princess Chelsea -  Respect the Labourers Lyrics.mp3","Queen - Crazy Little Thing Called Love (Official Video)-zO6D_BAuYCI.mp3","Queen - Somebody To Love (Official Video)-kijpcUv-b8M.mp3","Queen – Bohemian Rhapsody (Official Video Remastered)-fJ9rUzIMcZQ.mp3","Radiohead - Pyramid Song.mp3","Rakim (Live Remastered).mp3","Rapture (Remastered 2001).mp3","Righteous Brothers - Unchained Melody [Live - Best Quality] (1965)-IYj2hex99gY.mp3","Robert Plant - 'Ship of Fools' - Official Music Video [HD REMASTERED].mp3","Robert Plant - In the Mood (Official Video) [HD REMASTERED].mp3","Rosemary (2013 Remaster)-KrLkH3NZWBw.mp3","Route 66 (2006 Remaster)---nkk7iWREw.mp3","Ruby Tuesday.mp3","Sally Walker - Iggy Azalea (Lyrics) .mp3","San Tropez-Cv5uuhkS4j8.mp3","Santigold - L.E.S Artistes (Official Music Video)-ciJDA0tcQfs.mp3","Selena Gomez - Come & Get It-n-D1EB74Ckg.mp3","Sgt. Pepper's Lonely Hearts Club Band (Remastered 2009)-VtXl8xAPAtA.mp3","She - Green Day-OnF0pkWD2Tc.mp3","Sigur Ros - Svefn-g-englar-rtemrZ7-pj0.mp3","Sinead O'Connor - Mandinka (Official Video)-h08pCvyKfbs.mp3","Stacey Q - Two Of Hearts (Official Music Video)-lfBdGT4dn4E.mp3","Starship - We Built This City (Official Music Video)-K1b8AhIsSYQ.mp3","stephanie poetri - touch (unicorn mix)-i3Jq7c-1jeI.mp3","Steve Winwood - Higher Love (Official Music Video)-k9olaIio3l8.mp3","Strongman-GbHUAFd5Xcw.mp3","Studio Killers - Jenny (I Wanna Ruin Our Friendship) OFFICIAL MUSIC VIDEO-hyj4JFSErrw.mp3","Studio Killers - Ode To The Bouncer (Official Music Video)-R6kXsSJlOio.mp3","Sunday Girl (Remastered)-7VWalYqwKIA.mp3","Supremes - Where Did Our Love Go (1964) HD 0815007-qTBmgAOO0Nw.mp3","Surfing on a Rocket-0y3s38pZWY0.mp3","Taylor Swift - Epiphany (unicorn mix)-4ZWByYRIULs.mp3","Taylor Swift - Style--CmadmM5cOk.mp3","Ten Years Gone (1990 Remaster).mp3","Tessa Violet - Bored (Official Music Video)-tsPxaAVg584.mp3","Tessa Violet - Crush (Official Music Video)-SiAuAJBZuGs.mp3","Tessa Violet - Games (Official Lyric Video)-ZwZBnCKzQrY.mp3","That Poppy - American Kids (Audio)-SBfvF4iULyg.mp3","That Poppy - Lowlife (Official Video)-lwnoSeiAFSY.mp3","That Poppy - Money-BN5me-2CZWw.mp3","The Boys Of Summer DON HENLEY(1984) OFFICIAL MUSIC VIDEO-LeBTFjSUNMM.mp3","The Byrds - Turn! Turn! Turn! (To Everything There Is A Season) (Audio).mp3","The Cardigans - Lovefool (Official Music Video)-NI6aOFI7hms.mp3","The Climb - Miley Cyrus (Lyrics) .mp3","The Crystal Method - Trip Like I Do (Original)-hfUSyoJcbxU.mp3","The Cure - Close To Me [Closer Mix]-phMX4DBafG4.mp3","The Cure - Just Like Heaven (Official Audio)-1ASpBpT8bRQ.mp3","The Doors - Music Video - L.A. Woman 1971 _ HQ-TMiAQPABgHA.mp3","The Everly Brothers Til I Kissed You.mp3","The Go-Go's - Our Lips Are Sealed (Official Music Video)-r3kQlzOi27M.mp3","The Go-Go's - Vacation (Official Music Video)-2RHTiXvELNg.mp3","The Holy Egoism Of Genius-CZ_D7dDdxU4.mp3","The Killers - Mr. Brightside (Official Music Video)-gGdGFtwCNBE.mp3","The Pogues - Love you 'Till the End Lyrics-x5kCqkQjAZk.mp3","The Postal Service - Such Great Heights [OFFICIAL VIDEO]-0wrsZog8qXg.mp3","The Postal Service - We Will Become Silhouettes [OFFICIAL VIDEO]-0rKC7ElkTUQ.mp3","The Princess and the Warrior_ Touched.mp3","The Prodigy - 'Breathe'.mp3","The Rain Song (Remaster).mp3","The Rolling Stones - 2000 Light Years From Home (Official Lyric Video)-nRc0yaMW7Mw.mp3","The Rolling Stones - She's A Rainbow (Official Lyric Video)-6c1BThu95d8.mp3","The Rolling Stones - You Cant Always Get What You Want (Official Lyric Video).mp3","The Romance Of The Telescope-DHuNv-yfRK4.mp3","The Ronettes - Be My Baby (Official Audio)-jSPpbOGnFgk.mp3","The Smashing Pumpkins - Cherub Rock (Official Music Video)-q-KE9lvU810.mp3","The Smashing Pumpkins - Today (Official Music Video)-xmUZ6nCFNoU.mp3","The Staunton Lick-6Ls_XYQuGJU.mp3","The Temper Trap - Sweet Disposition (Official Video)-4C8e7nNLZNs.mp3","The Ting Tings - Thats Not My Name (Official Video).mp3","Then He Kissed Me- The Crystals (HD)-MSkum4B162M.mp3","They Might Be Giants - Birdhouse In Your Soul (Official Music Video)-vn_or9gEB6g.mp3","This Heaven-37azjWGlk2s.mp3","This Mortal Coil - Song To The Siren (Official Video)-HFWKJ2FUiAQ.mp3","Tiffany - I Think We're Alone Now (Official Music Video)-w6Q3mHyzn78.mp3","Tina Turner - Whats Love got to do with it (sung by Morgan James) (unicorn mix)-XUVia8uMFCQ.mp3","Tom Petty - Free Fallin'-1lWJXDG2i0A.mp3","Tom Petty - You Don't Know How It Feels [Official Music Video].mp3","Tom Petty And The Heartbreakers - I Won't Back Down (Official Music Video)-nvlTJrNJ5lA.mp3","Tom Petty And The Heartbreakers - Runnin' Down A Dream (Official Music Video)-Y1D3a5eDJIs.mp3","twenty one pilots - Chlorine (Official Video)-eJnQBXmZ7Ek.mp3","Van Halen - Jump (Official Music Video)-SwYN7mTi6HM.mp3","Van Halen - Panama (Official Music Video)-fuKDBPw8wQA.mp3","Van Halen- Dance The Night Away-SISRcB-cmkY.mp3","Veruca Salt  Seether.mp3","When the Levee Breaks (Remaster).mp3","Whitney Houston - I Wanna Dance With Somebody (Official Video)-eH3giaIzONA.mp3","Willie Nelson - Always On My Mind (Official Video)-R7f189Z0v0Y.mp3","XTC - Another Satellite [HD].mp3","XTC - Mayor of Simpleton-5Da9sc6YDBo.mp3","Yazoo - Only You (Official Music Video)-a4g5MeonGYM.mp3","You've Made Me So Very Happy-mjZtRAoITP0.mp3"]
+
+
+
+	    tracks = tracks.map(v=> 'tracks/'+encodeURIComponent(v))
+
+
+      vid = document.createElement('video')
+      vid.style.position = 'absolute'
+      vid.style.opacity = '0'
+      vid.style.top = '0'
+      vid.style.zIndex=-1;
+      vid.style.mouseEvents = 'none'
+      vid.style.left = '0'
+      document.body.appendChild(vid)
+      vid.src='sleepBuster.mp4'
+      vid.loop=true
+      vid.muted=true
+      vid.play()
+      renderTracks()
+      nextRnd = Rn()*tracks.length|0
+      playTrack(shuffle ? nextRnd : curIDX=(curIDX)%tracks.length)
+    </script>
+    </div>
+  </body>
+</html>
